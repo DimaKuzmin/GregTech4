@@ -138,7 +138,8 @@ public class GT_RecipeRegistrator {
 		if (aAssotiation == null || !aAssotiation.startsWith(OrePrefixes.ingot.toString())) aPlate = null;
 		if (aPlate != null && GT_OreDictUnificator.getFirstOre(aPlate, 1) == null) aPlate = null;
 		
-		if (!GT_Utility.areStacksEqual(GT_OreDictUnificator.get(aMat), new ItemStack(Items.iron_ingot, 1))) {
+		if (!GT_Utility.areStacksEqual(GT_OreDictUnificator.get(aMat), new ItemStack(Items.iron_ingot, 1)))
+		{
 			RecipeHandler.scheduleCraftingToRemove(new DoubleMatcher(new ItemStack(Items.bucket, 1), false, aMat, null, aMat, null, aMat, null, null, null, null));
 			RecipeHandler.scheduleCraftingToRemove(new DoubleMatcher(new ItemStack(Items.bucket, 1), false, null, null, null, aMat, null, aMat, null, aMat, null));
 			RecipeHandler.scheduleCraftingToRemove(new DoubleMatcher(new ItemStack(Items.minecart, 1), false, aMat, null, aMat, aMat, aMat, aMat, null, null, null));
@@ -151,33 +152,57 @@ public class GT_RecipeRegistrator {
 			sMt1.stackSize = 1;
 			Items.feather.setDamage(sMt1, Items.feather.getDamage(aMat));
 			
-			for (int i = 0; i < sShapes1.length; i++) {
+			for (int i = 0; i < sShapes1.length; i++) 
+			{
 				ItemStack[] tRecipe = sShapes1[i];
 				int tAmount1 = 0;
 				for (ItemStack tMat : tRecipe)
 					if (tMat == sMt1) tAmount1++;
-				for (ItemStack tCrafted : GT_ModHandler.getRecipeOutputs(tRecipe)) {
+				
+				for (ItemStack tCrafted : GT_ModHandler.getRecipeOutputs(tRecipe)) 
+				{
 					if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), null, 0, false);
 					final ItemStack tmp = GT_Utility.copyAmount(tAmount1, tUnificated);
 					if (aBackSmelting) RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, tmp));
 				}
 				
-				for (Materials tMaterial : sRodMaterialList) {
+				for (Materials tMaterial : sRodMaterialList) 
+				{
 					ItemStack tMt2 = GT_OreDictUnificator.get(OrePrefixes.stick, tMaterial, 1), tMt3 = GT_OreDictUnificator.get(OrePrefixes.dustSmall, tMaterial, 2);
-			    	if (tMt2 != null) {
+			    	if (tMt2 != null)
+			    	{
 						sMt2.func_150996_a(tMt2.getItem());
 						sMt2.stackSize = 1;
 						Items.feather.setDamage(sMt2, Items.feather.getDamage(tMt2));
 						
 						int tAmount2 = 0;
 						for (ItemStack tMat : tRecipe) 
-							if (tMat == sMt2) tAmount2++;
-						for (ItemStack tCrafted : GT_ModHandler.getVanillyToolRecipeOutputs(tRecipe)) {
+							if (tMat == sMt2)
+								tAmount2++;
+						
+						for (ItemStack tCrafted : GT_ModHandler.getVanillyToolRecipeOutputs(tRecipe))
+						{
 							if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), tAmount2>0?GT_Utility.mul(tAmount2, tMt3):null, 100, false);
 							if (aBackSmelting) GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, tUnificated));
-							if (aRecipeReplacing && aPlate != null && sShapesA[i] != null && sShapesA[i].length > 1) {
-								if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, aAssotiation.replaceFirst(OrePrefixes.ingot.toString(), "")+"."+sShapesA[i][0], true)) {
-									if (null != (tStack = GT_ModHandler.removeRecipe(tRecipe))) {
+							
+							if (aRecipeReplacing && aPlate != null && sShapesA[i] != null && sShapesA[i].length > 1)
+							{
+								if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, aAssotiation.replaceFirst(OrePrefixes.ingot.toString(), "")+"."+sShapesA[i][0], true)) 
+								{
+									if (null != (tStack = GT_ModHandler.removeRecipe(tRecipe))) 
+									{
+										/*
+										String name = "Removed Recipe: ";
+										for (ItemStack item : tRecipe)
+										{		
+											if (item != null)
+											name += item.getDisplayName() + ",";									
+										}
+										
+										GT_Log.log.info(name);
+									*	*/
+											
+										
 										switch (sShapesA[i].length) {
 										case  2: GT_ModHandler.addCraftingRecipe(tStack, false, false, true, new Object[] {sShapesA[i][1]									, s_P.charAt(0), aPlate, s_H.charAt(0), GT_ToolDictNames.craftingToolHardHammer, s_R.charAt(0), OrePrefixes.stick.toString() + tMaterial, s_I.charAt(0), aAssotiation, s_F.charAt(0), GT_ToolDictNames.craftingToolFile, s_W.charAt(0), GT_ToolDictNames.craftingToolWrench}); break;
 										case  3: GT_ModHandler.addCraftingRecipe(tStack, false, false, true, new Object[] {sShapesA[i][1], sShapesA[i][2]					, s_P.charAt(0), aPlate, s_H.charAt(0), GT_ToolDictNames.craftingToolHardHammer, s_R.charAt(0), OrePrefixes.stick.toString() + tMaterial, s_I.charAt(0), aAssotiation, s_F.charAt(0), GT_ToolDictNames.craftingToolFile, s_W.charAt(0), GT_ToolDictNames.craftingToolWrench}); break;

@@ -464,7 +464,8 @@ public class GT_CraftingRecipeLoader implements Runnable {
     	
     	GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,113), new Object[] {"PCP", "GSG", "PMP", 'M', GT_OreDictNames.craftingRawMachineTier02, 'C', OrePrefixes.circuit.get(Materials.Advanced), 'G', OrePrefixes.gearGt.get(Materials.Steel), 'P', GT_OreDictNames.craftingPlateSteel, 'S', GT_OreDictNames.craftingDiamondBlade});
     	
-		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("canner", 1));
+     
+ 		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("canner", 1));
 		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("macerator", 1));
 		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("extractor", 1));
 		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("compressor", 1));
@@ -473,8 +474,10 @@ public class GT_CraftingRecipeLoader implements Runnable {
 		
 		GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("canner", 1), new Object[] {"PCP", "PMP", "PPP", 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'C', OrePrefixes.circuit.get(Materials.Basic), 'P', OrePrefixes.plate.get(Materials.Tin)});
 		
-		if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "automaticmachines", true)) {
-        	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "allowVanillaIC2MachinesFromAutomaticOnes", false)) {
+		if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "automaticmachines", true)) 
+		{
+        	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "allowVanillaIC2MachinesFromAutomaticOnes", false))
+			{
 	    		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,50), new Object[] {GT_ModHandler.getIC2Item("macerator", 1)});
 	    		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,51), new Object[] {GT_ModHandler.getIC2Item("extractor", 1)});
 	    		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,52), new Object[] {GT_ModHandler.getIC2Item("compressor", 1)});
@@ -487,6 +490,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
 	    		GT_ModHandler.addShapelessCraftingRecipe(GT_ModHandler.getIC2Item("recycler", 1)		, new Object[] {new ItemStack(GregTech_API.sBlockList[1], 1,53)});
 	    		GT_ModHandler.addShapelessCraftingRecipe(GT_ModHandler.getIC2Item("electroFurnace", 1)	, new Object[] {new ItemStack(GregTech_API.sBlockList[1], 1,54)});
         	}
+        	
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,51), new Object[] {"TMT", "TCT",        'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'C', OrePrefixes.circuit.get(Materials.Basic), 'T', GT_ModHandler.getIC2Item("treetap", 1, GregTech_API.ITEM_WILDCARD_DAMAGE)});
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,52), new Object[] {"S S", "SMS", "SCS", 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'C', OrePrefixes.circuit.get(Materials.Basic), 'S', "stoneSmooth"});
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,53), new Object[] {" G ", "DMD", "RDR", 'M', GT_OreDictNames.craftingCompressor, 'G', OrePrefixes.dust.get(Materials.Glowstone), 'R', tNeedsSteel?GT_OreDictNames.craftingPlateSteel:OrePrefixes.plate.get(Materials.Iron), 'D', new ItemStack(Blocks.dirt, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)});
@@ -499,8 +503,11 @@ public class GT_CraftingRecipeLoader implements Runnable {
             } else {
             	GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,50), new Object[] {"FFF", "SMS", " C ", 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'C', OrePrefixes.circuit.get(Materials.Basic), 'F', new ItemStack(Items.flint, 1), 'S', "stoneCobble"});
             }
-    	} else {
-        	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "allowVanillaIC2MachinesFromAutomaticOnes", false)) {
+    	} 
+		else
+    	{
+        	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "allowVanillaIC2MachinesFromAutomaticOnes", false)) 
+        	{
         		GT_ModHandler.addShapelessCraftingRecipe(GT_ModHandler.getIC2Item("macerator", 1)		, new Object[] {new ItemStack(GregTech_API.sBlockList[1], 1,50)});
 	    		GT_ModHandler.addShapelessCraftingRecipe(GT_ModHandler.getIC2Item("extractor", 1)		, new Object[] {new ItemStack(GregTech_API.sBlockList[1], 1,51)});
 	    		GT_ModHandler.addShapelessCraftingRecipe(GT_ModHandler.getIC2Item("compressor", 1)		, new Object[] {new ItemStack(GregTech_API.sBlockList[1], 1,52)});
@@ -513,14 +520,18 @@ public class GT_CraftingRecipeLoader implements Runnable {
     		GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("recycler"			, 1), new Object[] {" G ", "DMD", "RDR", 'M', GT_OreDictNames.craftingCompressor, 'G', OrePrefixes.dust.get(Materials.Glowstone), 'R', tNeedsSteel?GT_OreDictNames.craftingPlateSteel:OrePrefixes.plate.get(Materials.Iron), 'D', new ItemStack(Blocks.dirt, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)});
     		GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("electroFurnace"	, 1), new Object[] {" C ", "RMR"       , 'M', tNeedsSteel?new ItemStack(GregTech_API.sBlockList[1], 1,138):GT_OreDictNames.craftingIronFurnace, 'C', OrePrefixes.circuit.get(Materials.Basic), 'R', OrePrefixes.dust.get(Materials.Redstone)});
     		
-            if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "macerator", true)) {
+            if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "macerator", true)) 
+            {
             	GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("macerator", 1), new Object[] {"FDF", "DMD", "FAF", 'F', tNeedsSteel?GT_OreDictNames.craftingPlateSteel:new ItemStack(Items.flint, 1), 'A', OrePrefixes.circuit.get(Materials.Advanced), 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'D', OrePrefixes.gem.get(Materials.Diamond)});
             	GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("macerator", 1), new Object[] {"FDF", "DMD", "FAF", 'F', tNeedsSteel?GT_OreDictNames.craftingPlateSteel:new ItemStack(Items.flint, 1), 'A', OrePrefixes.circuit.get(Materials.Advanced), 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'D', OrePrefixes.dust.get(Materials.Diamond)});
             	GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("macerator", 1), new Object[] {"FDF", "AMA", "FAF", 'F', tNeedsSteel?GT_OreDictNames.craftingPlateSteel:new ItemStack(Items.flint, 1), 'A', OrePrefixes.circuit.get(Materials.Basic), 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'D', GT_OreDictNames.craftingGrinder});
-            } else {
+            } 
+            else 
+            {
             	GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("macerator", 1), new Object[] {"FFF", "SMS", " C ", 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'C', OrePrefixes.circuit.get(Materials.Basic), 'F', new ItemStack(Items.flint, 1), 'S', "stoneCobble"});
             }
     	}
+ 
     	
 		if (GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("inductionFurnace", 1))) GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("inductionFurnace", 1), new Object[] {"CCC", "CFC", "CMC", 'M', GT_OreDictNames.craftingRawMachineTier02, 'F', GT_OreDictNames.craftingElectricFurnace, 'C', OrePrefixes.ingot.get(Materials.Copper)});
 		

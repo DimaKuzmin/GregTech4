@@ -17,6 +17,29 @@ import net.minecraftforge.fluids.FluidStack;
 /**
  * This List contains every Material I know about, and is used to determine Recipes for the 
  */
+
+/**
+ * @param aMetaItemSubID the Sub-ID used in my own MetaItems. Range 0-1000. -1 for no Material
+ * @param aTypes which kind of Items should be generated. Bitmask as follows:
+ *      1 = Dusts of all kinds.
+ *      2 = Dusts, Ingots, Plates, Rods/Sticks, Machine Components and other Metal specific things.
+ *      4 = Dusts, Gems, Plates, Lenses (if transparent).
+ *      8 = Dusts, Impure Dusts, crushed Ores, purified Ores, centrifuged Ores etc.
+ *     16 = Cells
+ *     32 = Plasma Cells
+ *     64 = Tool Heads
+ *    128 = Gears
+ * @param aA transparency of the Material Texture. 0 = fully visible, 255 = Invisible.
+ * @param aFuelType Type of Generator to get Energy from this Material.
+ * @param aFuelPower EU generated. Will be multiplied by 1000, also additionally multiplied by 2 for Gems.
+ * @param aAmplificationValue Amount of UUM amplifier gotten from this.
+ * @param aUUMEnergy Amount of EU needed to shape the UUM into this Material.
+ * @param aMeltingPoint Used to determine the smelting Costs in Furnii.
+ * @param aBlastFurnaceTemp Used to determine the needed Heat capactiy Costs in Blast Furnii.
+ * @param aBlastFurnaceRequired If this requires a Blast Furnace.
+ * @param aColor Vanilla MC Wool Color which comes the closest to this.
+ * @param aR, aG, aB Color of the Material 0-255 each.
+ */
 public enum Materials {
 	/**
 	 * This is the Default Material returned in case no Material has been found or a NullPointer has been inserted at a location where it shouldn't happen.
@@ -100,8 +123,8 @@ public enum Materials {
 	Titanium			(  28, GT_ItemTextures.SET_METALLIC			, 1|2  |8      |64|128                  , 220, 160, 240,   0,	0,    0,       0,          0,          1500,       1500, true, false , 5,   1,   1,   Dyes.dyePurple, Element.Ti		),
 	Tritium				(   3, GT_ItemTextures.SET_METALLIC			,         16                            , 255,   0,   0, 240,	0,    0,       0,          0,          0,          0,    false, true,  10,  1,   1,   Dyes.dyeRed, Element.T			),
 	Tungsten			(  81, GT_ItemTextures.SET_METALLIC			, 1|2  |8|16   |64|128                  ,  50,  50,  50,   0,	0,    0,       0,          0,          2500,       2500, true, false , 4,   1,   1,   Dyes.dyeBlack, Element.W			),
-	Uranium				(  98, GT_ItemTextures.SET_METALLIC			, 1|2  |8      |64                      ,  50, 240,  50,   0,	0,    0,       1000000,    0,          0,          0,    false, false, 4,   1,   1,   Dyes.dyeGreen, Element.U			),
-	Uranium235			(  97, GT_ItemTextures.SET_SHINY			, 1|2  |8      |64                      ,  70, 250,  70,   0,	0,    0,       1000000,    0,          0,          0,    false, false, 4,   1,   1,   Dyes.dyeGreen, Element.U_235		),
+	//Uranium				(  98, GT_ItemTextures.SET_METALLIC			, 1|2  |8      |64                      ,  50, 240,  50,   0,	0,    0,       1000000,    0,          0,          0,    false, false, 4,   1,   1,   Dyes.dyeGreen, Element.U			),
+	//Uranium235			(  97, GT_ItemTextures.SET_SHINY			, 1|2  |8      |64                      ,  70, 250,  70,   0,	0,    0,       1000000,    0,          0,          0,    false, false, 4,   1,   1,   Dyes.dyeGreen, Element.U_235		),
 	Vanadium			(  29, GT_ItemTextures.SET_METALLIC			, 1|2  |8                               ,  50,  50,  50,   0,	0,    0,       0,          0,          0,          0,    false, false, 2,   1,   1,   Dyes.dyeBlack, Element.V			),
 	Ytterbium			(  77, GT_ItemTextures.SET_METALLIC			, 1|2  |8                               , 245, 245, 245,   0,	0,    0,       0,          0,          1097,       1097, true, false , 4,   1,   1,   Dyes._NULL, Element.Yb		),
 	Yttrium				(  45, GT_ItemTextures.SET_METALLIC			, 1|2  |8                               , 255, 255, 255,   0,	0,    0,       0,          0,          1799,       1799, true, false , 4,   1,   1,   Dyes._NULL, Element.Y			),
@@ -412,7 +435,7 @@ public enum Materials {
 	Topaz				( 507, GT_ItemTextures.SET_GEM_HORIZONTAL	, 1  |4|8      |64                      , 255, 128,   0, 127,	0,    0,       0,          0,          0,          0,    false, true,  5,   1,   1,   Dyes.dyeOrange	, 1, Arrays.asList(new MaterialStack(Aluminium, 2), new MaterialStack(Silicon, 1), new MaterialStack(Fluorine, 2), new MaterialStack(Hydrogen, 2), new MaterialStack(Oxygen, 6))),
 	Tungstate			( 841, GT_ItemTextures.SET_DULL				, 1    |8                               ,  55,  50,  35,   0,	0,    0,       0,          0,          2500,       2500, true,  false, 4,   1,   1,   Dyes.dyeBlack		, 1, Arrays.asList(new MaterialStack(Tungsten, 1), new MaterialStack(Lithium, 2), new MaterialStack(Oxygen, 4))),
 	Ultimet				( 344, GT_ItemTextures.SET_SHINY			, 1|2          |64|128                  , 180, 180, 230,   0,	0,    0,       0,          0,          2700,       2700, true,  false, 1,   1,   1,   Dyes.dyeLightBlue	, 1, Arrays.asList(new MaterialStack(Cobalt, 5), new MaterialStack(Chrome, 2), new MaterialStack(Nickel, 1), new MaterialStack(Molybdenum, 1))), // 54% Cobalt, 26% Chromium, 9% Nickel, 5% Molybdenum, 3% Iron, 2% Tungsten, 0.8% Manganese, 0.3% Silicon, 0.08% Nitrogen and 0.06% Carbon
-	Uraninite			( 922, GT_ItemTextures.SET_METALLIC			, 1    |8                               ,  35,  35,  35,   0,	0,    0,       0,          0,          0,          0,    false, false, 1,   1,   1,   Dyes.dyeLime		, 2, Arrays.asList(new MaterialStack(Uranium, 1), new MaterialStack(Oxygen, 2))),
+	//Uraninite			( 922, GT_ItemTextures.SET_METALLIC			, 1    |8                               ,  35,  35,  35,   0,	0,    0,       0,          0,          0,          0,    false, false, 1,   1,   1,   Dyes.dyeLime		, 2, Arrays.asList(new MaterialStack(Uranium, 1), new MaterialStack(Oxygen, 2))),
 	Uvarovite			( 842, GT_ItemTextures.SET_DIAMOND			, 1    |8                               , 180, 255, 180,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeGreen		, 1, Arrays.asList(new MaterialStack(Calcium, 3), new MaterialStack(Chrome, 2), new MaterialStack(Silicon, 3), new MaterialStack(Oxygen, 12))),
 	Water				( 701, GT_ItemTextures.SET_FLUID			,         16                            ,   0,   0, 255,   0,	0,    0,       0,          0,          0,          0,    false, false, 1,   1,   1,   Dyes.dyeBlue		, 0, Arrays.asList(new MaterialStack(Hydrogen, 2), new MaterialStack(Oxygen, 1))),
 	Wulfenite			( 882, GT_ItemTextures.SET_DULL				, 1    |8                               , 255, 128,   0,   0,	0,    0,       0,          0,          0,          0,    false, false, 1,   1,   1,   Dyes.dyeOrange	, 2, Arrays.asList(new MaterialStack(Lead, 1), new MaterialStack(Molybdenum, 1), new MaterialStack(Oxygen, 4))),
@@ -550,7 +573,7 @@ public enum Materials {
 	@Deprecated Soulsand			(SoulSand, false),
 	@Deprecated SilverLead			(Galena, false),
 	@Deprecated Titan				(Titanium, false),
-	@Deprecated Uran				(Uranium, false),
+	//@Deprecated Uran				(Uranium, false),
 	@Deprecated Wolframite			(Tungstate, false),
 	@Deprecated Wolframium			(Tungsten, false),
 	@Deprecated Wolfram				(Tungsten, false),
@@ -560,8 +583,8 @@ public enum Materials {
 	
 	static {
 		Thorium			.add(SubTag.ENCHANTMENT_GLOW);
-		Uranium			.add(SubTag.ENCHANTMENT_GLOW);
-		Uranium235		.add(SubTag.ENCHANTMENT_GLOW);
+		//Uranium			.add(SubTag.ENCHANTMENT_GLOW);
+		//Uranium235		.add(SubTag.ENCHANTMENT_GLOW);
 		Plutonium		.add(SubTag.ENCHANTMENT_GLOW);
 		Plutonium241	.add(SubTag.ENCHANTMENT_GLOW);
 		NetherStar		.add(SubTag.ENCHANTMENT_GLOW);
@@ -636,7 +659,7 @@ public enum Materials {
 		Rubber			.setSpecialEffect(GT_SpecialToolEffect.Bouncy, 2);
 		
 		Thorium			.setSpecialEffect(GT_SpecialToolEffect.Radioactive, 1);
-		Uranium			.setSpecialEffect(GT_SpecialToolEffect.Radioactive, 2);
+//		Uranium			.setSpecialEffect(GT_SpecialToolEffect.Radioactive, 2);
 		Plutonium		.setSpecialEffect(GT_SpecialToolEffect.Radioactive, 3);
 		
 		Stone			.setSpecialEffect(GT_SpecialToolEffect.Crushing, 1);
@@ -692,7 +715,7 @@ public enum Materials {
 		FullersEarth	.addOreByProduct(Aluminium		).addOreByProduct(Silicon			).addOreByProduct(Magnesium		);
 		Bentonite		.addOreByProduct(Aluminium		).addOreByProduct(Calcium			).addOreByProduct(Magnesium		);
 		Bastnasite		.addOreByProduct(Yttrium		).addOreByProduct(Lanthanum			).addOreByProduct(Cerium		);
-		Uraninite		.addOreByProduct(Uranium		).addOreByProduct(Thorium			).addOreByProduct(Plutonium		);
+//		Uraninite		.addOreByProduct(Uranium		).addOreByProduct(Thorium			).addOreByProduct(Plutonium		);
 		Galena			.addOreByProduct(Sulfur			).addOreByProduct(Silver			).addOreByProduct(Lead			);
 		Lapis			.addOreByProduct(Lazurite		).addOreByProduct(Sodalite			).addOreByProduct(Pyrite		);
 		Pyrite			.addOreByProduct(Sulfur			).addOreByProduct(Phosphorus		).addOreByProduct(Iron			);
@@ -702,7 +725,7 @@ public enum Materials {
 		GarnetYellow	.addOreByProduct(Andradite		).addOreByProduct(Grossular			).addOreByProduct(Uvarovite		);
 		Cooperite		.addOreByProduct(Palladium		).addOreByProduct(Nickel			).addOreByProduct(Iridium		);
 		Cinnabar		.addOreByProduct(Redstone		).addOreByProduct(Sulfur			).addOreByProduct(Glowstone		);
-		Pitchblende		.addOreByProduct(Thorium		).addOreByProduct(Uranium			).addOreByProduct(Plutonium		);
+//		Pitchblende		.addOreByProduct(Thorium		).addOreByProduct(Uranium			).addOreByProduct(Plutonium		);
 		Tantalite		.addOreByProduct(Manganese		).addOreByProduct(Niobium			).addOreByProduct(Tantalum		);
 		Pollucite		.addOreByProduct(Caesium		).addOreByProduct(Aluminium			).addOreByProduct(Rubidium		);
 		Chrysotile		.addOreByProduct(Asbestos		).addOreByProduct(Silicon			).addOreByProduct(Magnesium		);
@@ -710,7 +733,7 @@ public enum Materials {
 		Sphalerite		.addOreByProduct(Zinc			).addOreByProduct(GarnetYellow		).addOreByProduct(Cadmium		);
 		Chalcopyrite	.addOreByProduct(Pyrite			).addOreByProduct(Cobalt			).addOreByProduct(Cadmium		); // Gold?
 		Pentlandite		.addOreByProduct(Iron			).addOreByProduct(Sulfur			).addOreByProduct(Cobalt		);
-		Uranium			.addOreByProduct(Lead			).addOreByProduct(Plutonium			).addOreByProduct(Thorium		);
+//		Uranium			.addOreByProduct(Lead			).addOreByProduct(Plutonium			).addOreByProduct(Thorium		);
 		Scheelite		.addOreByProduct(Manganese		).addOreByProduct(Molybdenum		).addOreByProduct(Calcium		);
 		Tungstate		.addOreByProduct(Manganese		).addOreByProduct(Silver			).addOreByProduct(Lithium		);
 		Tungsten		.addOreByProduct(Manganese		).addOreByProduct(Molybdenum		);
@@ -722,8 +745,8 @@ public enum Materials {
 		Antimony		.addOreByProduct(Zinc			).addOreByProduct(Iron				);
 		Silver			.addOreByProduct(Lead			).addOreByProduct(Sulfur			);
 		Lead			.addOreByProduct(Silver			).addOreByProduct(Sulfur			);
-		Thorium			.addOreByProduct(Uranium		).addOreByProduct(Lead				);
-		Plutonium		.addOreByProduct(Uranium		).addOreByProduct(Lead				);
+//		Thorium			.addOreByProduct(Uranium		).addOreByProduct(Lead				);
+//		Plutonium		.addOreByProduct(Uranium		).addOreByProduct(Lead				);
 		Electrum		.addOreByProduct(Gold			).addOreByProduct(Silver			);
 		Bronze			.addOreByProduct(Copper			).addOreByProduct(Tin				);
 		Brass			.addOreByProduct(Copper			).addOreByProduct(Zinc				);

@@ -97,7 +97,9 @@ public class ProcessingStone implements IOreRecipeRegistrator {
 							GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Thorium, 1L), 1);
 					break;
 				case GraniteRed:
-					RecipeMaps.GRINDER.factory().EUt(120).duration(16 * 100).input(RecipeEntry.fromStacks(16, entry.ores))
+				
+					/*
+					 * 	RecipeMaps.GRINDER.factory().EUt(120).duration(16 * 100).input(RecipeEntry.fromStacks(16, entry.ores))
 							.input(GT_ModHandler.getWater(1000))
 							.outputs(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 16L),
 									GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Uranium, 1L))
@@ -107,6 +109,8 @@ public class ProcessingStone implements IOreRecipeRegistrator {
 					GT_ModHandler.addPulverisationRecipe(entry, 1,
 							GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 1L),
 							GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Uranium, 1L), 1);
+					break;
+					*/
 					break;
 				case Sand:
 					GT_ModHandler.addPulverisationRecipe(entry, 1, new ItemStack(Blocks.sand, 1, 0), null, 10);

@@ -27,13 +27,15 @@ public class GT_LiquidAndFuelLoader implements Runnable {
         ItemStack tStack = GT_ModHandler.getRCItem("fluid.creosote.cell", 1);
         FluidStack tLiquid = GT_Utility.getFluidForFilledItem(tStack);;
         
-        if (tLiquid != null) {
+        if (tLiquid != null) 
+        {
         	tLiquid = tLiquid.copy();
         	tLiquid.amount = 1000;
         	Materials.Creosote.mFluid = tLiquid;
         }
 
         Materials.Water.mFluid = Materials.Ice.mFluid = GT_ModHandler.getWater(1000);
+        
         Materials.Lava.mFluid = GT_ModHandler.getLava(1000);
         Materials.ConstructionFoam.mFluid = GT_Utility.getFluidForFilledItem(GT_ModHandler.getIC2Item("CFCell", 1));
         Materials.UUMatter.mFluid = GT_Utility.getFluidForFilledItem(GT_ModHandler.getIC2Item("uuMatterCell", 1));
@@ -46,6 +48,19 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		if (null != (tLiquid = FluidRegistry.getFluidStack("seedoil"		, 1000))) {Materials.SeedOil.mFluid							= tLiquid.copy(); FluidContainerRegistry.registerFluidContainer(new FluidContainerData(tLiquid, tStack = GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil	, 1), GT_ModHandler.getEmptyCell(1))); GT_ModHandler.addLiquidTransposerRecipe(GT_ModHandler.getEmptyCell(1), tLiquid, tStack, 160);}
 		if (null != (tLiquid = FluidRegistry.getFluidStack("creosote"		, 1000))) {Materials.Creosote.mFluid						= tLiquid.copy(); FluidContainerRegistry.registerFluidContainer(new FluidContainerData(tLiquid, tStack = GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Creosote	, 1), GT_ModHandler.getEmptyCell(1))); GT_ModHandler.addLiquidTransposerRecipe(GT_ModHandler.getEmptyCell(1), tLiquid, tStack, 160);}
 		
+		/*
+		if (null != (tLiquid = FluidRegistry.getFluidStack("steam", 1000) )) 
+		{
+			Materials.Water.mFluid						= tLiquid.copy();
+			FluidContainerRegistry.registerFluidContainer(
+			new FluidContainerData(tLiquid, 
+			tStack = GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Water	, 1), 
+			GT_ModHandler.getEmptyCell(1))); 
+			GT_ModHandler.addLiquidTransposerRecipe(GT_ModHandler.getEmptyCell(1), tLiquid, tStack, 160
+			);
+		}
+		*/
+		
 		GT_FluidRegistry.addFluid("heliumplasma"		, null					, Materials.Helium			, OrePrefixes.cellPlasma, 3, GT_ModHandler.getEmptyCell(1));
 		
 		GT_FluidRegistry.addFluid("hydrogen"			, null					, Materials.Hydrogen		, OrePrefixes.cell, 2, GT_ModHandler.getEmptyCell(1));
@@ -56,7 +71,8 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		GT_FluidRegistry.addFluid("methane"				, null					, Materials.Methane			, OrePrefixes.cell, 2, GT_ModHandler.getEmptyCell(1));
 		GT_FluidRegistry.addFluid("nitrogen"			, null					, Materials.Nitrogen		, OrePrefixes.cell, 2, GT_ModHandler.getEmptyCell(1));
 		GT_FluidRegistry.addFluid("nitrogendioxide"		, null					, Materials.NitrogenDioxide	, OrePrefixes.cell, 2, GT_ModHandler.getEmptyCell(1));
-		GT_FluidRegistry.addFluid("steam"				, null					, Materials.Water			, 2, null, null);
+		//GT_FluidRegistry.addFluid("steam"				, null					, Materials.Water			, 2, null, null);
+		GT_FluidRegistry.addFluid("steam"				, null					, Materials.Water			, OrePrefixes.cell, 2, GT_ModHandler.getEmptyCell(1));
 		
 		Materials.Ice.mGas = Materials.Water.mGas;
 		

@@ -51,9 +51,9 @@ public class GT_TickHandler {
             ++Materials.InfusedGold.mRGBa[0];
             ++Materials.InfusedGold.mRGBa[1];
             ++Materials.InfusedGold.mRGBa[2];
-            ++Materials.Uranium235.mRGBa[0];
-            ++Materials.Uranium235.mRGBa[1];
-            ++Materials.Uranium235.mRGBa[2];
+        //    ++Materials.Uranium235.mRGBa[0];
+        //    ++Materials.Uranium235.mRGBa[1];
+        //    ++Materials.Uranium235.mRGBa[2];
             ++Materials.NetherStar.mRGBa[0];
             ++Materials.NetherStar.mRGBa[1];
             ++Materials.NetherStar.mRGBa[2];
@@ -80,9 +80,9 @@ public class GT_TickHandler {
             --Materials.InfusedGold.mRGBa[0];
             --Materials.InfusedGold.mRGBa[1];
             --Materials.InfusedGold.mRGBa[2];
-            --Materials.Uranium235.mRGBa[0];
-            --Materials.Uranium235.mRGBa[1];
-            --Materials.Uranium235.mRGBa[2];
+        //    --Materials.Uranium235.mRGBa[0];
+        //    --Materials.Uranium235.mRGBa[1];
+        //    --Materials.Uranium235.mRGBa[2];
             --Materials.NetherStar.mRGBa[0];
             --Materials.NetherStar.mRGBa[1];
             --Materials.NetherStar.mRGBa[2];

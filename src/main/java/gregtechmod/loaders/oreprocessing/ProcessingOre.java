@@ -10,6 +10,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.recipe.RecipeFactory;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -26,6 +27,7 @@ import java.util.List;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ProcessingOre implements IOreRecipeRegistrator {
 
@@ -83,8 +85,17 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 		}
 	}
 	
-	private static boolean registerStandardOreRecipes(OrePrefixes aPrefix, Materials aMaterial, OreDictEntry entry, int aMultiplier) {
-		if (aMaterial != null) {
+	private static boolean registerStandardOreRecipes(OrePrefixes aPrefix, Materials aMaterial, OreDictEntry entry, int aMultiplier) 
+	{
+		 
+		
+		if ( entry.oreDictName == "oreUranium")
+			return false; 
+		
+		
+		
+		if (aMaterial != null) 
+		{
 			Materials tMaterial = aMaterial.mOreReplacement;
 			Materials tPrimaryByMaterial = null;
 			Materials tSecondaryByMaterial = null;
@@ -117,7 +128,8 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 
 			Iterator<Materials> iterator = aMaterial.mOreByProducts.iterator();
 
-			while (iterator.hasNext()) {
+			while (iterator.hasNext())
+			{
 				Materials tMat = (Materials) iterator.next();
 				if (tPrimaryByProduct == null) {
 					tPrimaryByMaterial = tMat;
@@ -166,8 +178,10 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 			
 			RecipeEntry ingr = RecipeEntry.fromStacks(entry.ores, Match.STRICT);
 			
-			if (tSmeltInto != null) {
-				if (!aMaterial.mBlastFurnaceRequired && !aMaterial.mDirectSmelting.mBlastFurnaceRequired) {
+			if (tSmeltInto != null)
+			{
+				if (!aMaterial.mBlastFurnaceRequired && !aMaterial.mDirectSmelting.mBlastFurnaceRequired) 
+				{
 					GT_ModHandler.addInductionSmelterRecipe(entry.ores.get(0), new ItemStack(Blocks.sand, 1),
 							GT_Utility.mul((aMultiplier * (aMaterial.contains(SubTag.INDUCTIONSMELTING_LOW_OUTPUT) ? 1 : 2) * aMaterial.mSmeltingMultiplier), tSmeltInto),
 							GT_Items.TE_Slag_Rich.get(1), 300 * aMultiplier, 10 * aMultiplier);
@@ -198,19 +212,37 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 				}
 			}
 
-			if (tCrushed != null) {
+			if (tCrushed != null) 
+			{
 				final ItemStack copy = GT_Utility.copy(tCrushed);
-				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammercrushing, aPrefix.get(aMaterial), true)) {
+				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammercrushing, aPrefix.get(aMaterial), true))
+				{
 					RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCraftingRecipe(copy, new Object[] { "T", "O", 'T', GT_ToolDictNames.craftingToolHardHammer, 'O', aPrefix.get(aMaterial) }));
 				}
 
 				RecipeMaps.HAMMER.factory().EUt(10) .duration(16).input(ingr).output(tCrushed).buildAndRegister();
+				
 				RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getMaceratorRecipeList(), (in, out) -> in.matches(entry.ores.get(0)));
+				
+				ItemStack stack = entry.ores.get(0);
+				
+				if (stack != null)
+				{
+					String name = "Removed Ore Crushed Recipe: " + stack.getDisplayName() + ", Unlockolazed: " + stack.getUnlocalizedName() + ", OreDict: " + entry.oreDictName;
+					 
+					GT_Log.log.info(name);
+				}
+
+		 
+					
+				
+				
 				final ItemStack out1 =tMaterial.contains(SubTag.PULVERIZING_CINNABAR) ? GT_OreDictUnificator.get(OrePrefixes.crystal, Materials.Cinnabar, GT_Utility.copyAmount(1, tPrimaryByProduct), 1L) : GT_Utility.copyAmount(1, tPrimaryByProduct);
 				final int val = tPrimaryByProduct == null ? 0 : tPrimaryByProduct.stackSize * 10 * aMultiplier * aMaterial.mByProductMultiplier;
 				RecipeHandler.executeOnFinish(() -> GT_ModHandler.addPulverisationRecipe(entry, 1, GT_Utility.mul(2L, copy), out1, val));
 				RecipeFactory<?> factory;
-				if (tGem != null) {
+				if (tGem != null) 
+				{
 					factory = RecipeMaps.GRINDER.factory()
 						.EUt(120).duration(100)
 						.input(ingr)
@@ -223,8 +255,10 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 						factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
 					factory.buildAndRegister();
 					
-					if (tMaterial.contains(SubTag.WASHING_MERCURY)) {
-						if (tSmall == null) {
+					if (tMaterial.contains(SubTag.WASHING_MERCURY)) 
+					{
+						if (tSmall == null) 
+						{
 							factory = RecipeMaps.GRINDER.factory()
 								.EUt(120).duration(100).setShaped(true)
 								.input(ingr)
@@ -251,7 +285,8 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 					}
 
 
-					if (tPrimaryByMaterial.contains(SubTag.WASHING_MERCURY)) {
+					if (tPrimaryByMaterial.contains(SubTag.WASHING_MERCURY))
+					{
 						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
@@ -303,7 +338,7 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 									? GT_Utility.mul((aMultiplier * 2 * aMaterial.mOreMultiplier), tCleaned)
 									: GT_Utility.mul((aMultiplier * 6 * aMaterial.mOreMultiplier), tSmall));
 							if (tPrimaryByProduct != null)
-								factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProduct));
+								factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
 							factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 				} else if (tCleaned != null) {
@@ -327,18 +362,19 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 						if (tPrimaryByProductSmall != null)
 							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
 						if (tSecondaryByProductSmall != null)
-							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProduct));
 						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
-					if (tPrimaryByMaterial.contains(SubTag.WASHING_MERCURY)) {
+					if (tPrimaryByMaterial.contains(SubTag.WASHING_MERCURY))
+					{
 						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury, aMultiplier))
 							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
 						if (tPrimaryByProductSmall != null)
-							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProduct));
 						if (tSecondaryByProductSmall != null)
 							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
 						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
@@ -353,11 +389,12 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 						if (tPrimaryByProductSmall != null)
 							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
 						if (tSecondaryByProductSmall != null)
-							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProduct));
 						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
-					if (tMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
+					if (tMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE))
+{
 						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
@@ -366,11 +403,27 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 						if (tPrimaryByProductSmall != null)
 							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
 						if (tSecondaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProduct));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
+					}
+					
+					if (tPrimaryByMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) 
+					{
+						factory = RecipeMaps.GRINDER.factory()
+							.EUt(120).duration(100).setShaped(true)
+							.input(ingr)
+							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProduct));
+						if (tSecondaryByProductSmall != null)
 							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
 						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
-
-					if (tPrimaryByMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
+					else 
+						
+					if (tSecondaryByMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE))
+					{
 						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
@@ -379,18 +432,7 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 						if (tPrimaryByProductSmall != null)
 							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
 						if (tSecondaryByProductSmall != null)
-							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
-						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
-					} else if (tSecondaryByMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
-						factory = RecipeMaps.GRINDER.factory()
-							.EUt(120).duration(100).setShaped(true)
-							.input(ingr)
-							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
-						if (tPrimaryByProductSmall != null)
-							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
-						if (tSecondaryByProductSmall != null)
-							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProduct));
 						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 				}

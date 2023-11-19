@@ -169,7 +169,7 @@ public class GT_DictRegistratorPreItem implements Runnable {
 		GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Copper			, GT_ModHandler.getIC2Item("copperBlock", 1));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Tin				, GT_ModHandler.getIC2Item("tinBlock", 1));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Bronze			, GT_ModHandler.getIC2Item("bronzeBlock", 1));
-        GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Uranium			, GT_ModHandler.getIC2Item("uraniumBlock", 1));
+     //   GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Uranium			, GT_ModHandler.getIC2Item("uraniumBlock", 1));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Silver			, new ItemStack(GregTech_API.sBlockList[0], 1, 3));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Ruby			, new ItemStack(GregTech_API.sBlockList[0], 1, 4));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Sapphire		, new ItemStack(GregTech_API.sBlockList[0], 1, 5));

@@ -18,7 +18,8 @@ public class ProcessingItem implements IOreRecipeRegistrator {
 		OrePrefixes.item.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) 
+	{
 		for (OreDictEntry entry : entries) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry))) {
 				for (ItemStack aStack : entry.ores) { // TODO fix this shit
@@ -35,7 +36,7 @@ public class ProcessingItem implements IOreRecipeRegistrator {
 							if (entry.oreDictName.equals("itemSaltpeter")) {
 								GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Utility.copyAmount(1, aStack), Materials.Saltpeter, GregTech_API.MATERIAL_UNIT);
 							} else if (entry.oreDictName.equals("itemUranium")) {
-								GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Utility.copyAmount(1, aStack), Materials.Uranium, GregTech_API.MATERIAL_UNIT);
+						//		GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Utility.copyAmount(1, aStack), Materials.Uranium, GregTech_API.MATERIAL_UNIT);
 							} else if (!entry.oreDictName.equals("itemRubber") && !entry.oreDictName.equals("itemRecord")) {
 								GT_Log.log.warn("Item Name: " + entry.oreDictName + " !!!Unknown Item detected!!! Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it\'s just an Information.");
 							}
